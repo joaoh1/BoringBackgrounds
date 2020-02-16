@@ -5,6 +5,7 @@ import io.github.cottonmc.cotton.config.annotations.ConfigFile;
 
 @ConfigFile(name = "boringbackgrounds")
 public class BoringBackgroundsConfig {
-    @Comment(value="The array of identifiers which will replace the dirt background, one will be picked.")
-    public String[] identifiers = new String[]{"minecraft:textures/gui/options_background.png"};
+	@Comment(value="The array of identifiers which will replace the dirt background, one will be picked.")
+	// "minecraft:" was added here in order to make the config slightly more easier to understand
+	public String[] identifiers = new String[]{"minecraft:textures/gui/options_background.png"};
 }

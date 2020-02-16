@@ -27,6 +27,7 @@ public class TextureManagerMixin {
 	private void customBackgroundBindTextureInner(Identifier id, CallbackInfo info) {
 		AbstractTexture abstractTexture = (AbstractTexture)this.textures.get(id);
 
+		// If the identifier is the same as the background texture, hijack it and change it to the chosen texture
 		if (id.equals(DrawableHelper.BACKGROUND_LOCATION)) {
 			abstractTexture = new ResourceTexture(BoringBackgroundsMod.backgroundTexture);
 			this.registerTexture(id, (AbstractTexture)abstractTexture);

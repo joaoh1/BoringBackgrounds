@@ -8,13 +8,12 @@ import net.minecraft.util.Identifier;
 
 public class BoringBackgroundsMod implements ClientModInitializer {
 	public static BoringBackgroundsConfig config;
-	public static int backgroundToPick;
 	public static Identifier backgroundTexture;
 
 	@Override
 	public void onInitializeClient() {
 		config = ConfigManager.loadConfig(BoringBackgroundsConfig.class);
-		backgroundToPick = new Random().nextInt(config.identifiers.length);
-		backgroundTexture = new Identifier(config.identifiers[backgroundToPick]);
+		// Pick the background texture with a randomly generated number
+		backgroundTexture = new Identifier(config.identifiers[new Random().nextInt(config.identifiers.length)]);
 	}
 }
