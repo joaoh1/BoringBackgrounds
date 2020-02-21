@@ -14,6 +14,6 @@ public class BoringBackgroundsMod implements ClientModInitializer {
 	public void onInitializeClient() {
 		config = ConfigManager.loadConfig(BoringBackgroundsConfig.class);
 		// Pick the background texture with a randomly generated number, it will be used by the mixin
-		backgroundTexture = new Identifier(config.identifiers[new Random().nextInt(config.identifiers.length)]);
+		backgroundTexture = new Identifier(config.textureIds[new Random().nextInt(config.textureIds.length)]);
 	}
 }

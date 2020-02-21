@@ -3,12 +3,12 @@
   "id": "boringbackgrounds",
   "version": "${version}",
   "name": "Boring Backgrounds",
-  "description": "Do you not like the dirt background? Then this mod's for you! You can change the background in .minecraft/config/boringbackgrounds.json",
+  "description": "Do you not like the dirt background? Then this mod is for you! You can change the background in .minecraft/config/boringbackgrounds.json",
   "authors": [
     "joaoh1"
   ],
   "contact": {
-    "homepage": "https://www.curseforge.com/minecraft/mc-mods/boringbackgrounds",
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/boring-backgrounds",
     "issues": "https://github.com/joaoh1/BoringBackgrounds/issues",
     "sources": "https://github.com/joaoh1/BoringBackgrounds"
   },
@@ -16,9 +16,7 @@
   "icon": "assets/boringbackgrounds/icon.png",
   "environment": "client",
   "entrypoints": {
-    "client": [
-      "io.github.joaoh1.boringbackgrounds.BoringBackgroundsMod"
-    ]
+    "client": ["io.github.joaoh1.boringbackgrounds.BoringBackgroundsMod"]
   },
   "mixins": [
     "boringbackgrounds.mixins.json"
