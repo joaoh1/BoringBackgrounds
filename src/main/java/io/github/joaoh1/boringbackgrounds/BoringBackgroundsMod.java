@@ -2,18 +2,22 @@ package io.github.joaoh1.boringbackgrounds;
 
 import java.util.Random;
 
-import io.github.cottonmc.cotton.config.ConfigManager;
+import io.github.joaoh1.boringbackgrounds.config.BoringBackgroundsConfig;
 import net.fabricmc.api.ClientModInitializer;
 import net.minecraft.util.Identifier;
 
 public class BoringBackgroundsMod implements ClientModInitializer {
-	public static BoringBackgroundsConfig config;
 	public static Identifier backgroundTexture;
+	public static String[] textureIdentifierStrings;
 
+	public static void updateBackground() {
+		BoringBackgroundsConfig.loadJanksonConfig();
+		textureIdentifierStrings = BoringBackgroundsConfig.textureIdentifiers.getValue();
+		backgroundTexture = new Identifier(textureIdentifierStrings[new Random().nextInt(textureIdentifierStrings.length)]);
+	}
+	
 	@Override
 	public void onInitializeClient() {
-		config = ConfigManager.loadConfig(BoringBackgroundsConfig.class);
-		// Pick the background texture with a randomly generated number, it will be used by the mixin
-		backgroundTexture = new Identifier(config.textureIds[new Random().nextInt(config.textureIds.length)]);
+		updateBackground();
 	}
 }

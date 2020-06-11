@@ -16,14 +16,15 @@
   "icon": "assets/boringbackgrounds/icon.png",
   "environment": "client",
   "entrypoints": {
-    "client": ["io.github.joaoh1.boringbackgrounds.BoringBackgroundsMod"]
+    "client": [
+      "io.github.joaoh1.boringbackgrounds.BoringBackgroundsMod"
+    ]
   },
   "mixins": [
     "boringbackgrounds.mixins.json"
   ],
   "depends": {
-    "cotton-config": ">=1.0.0-rc.4",
     "fabricloader": ">=0.7.8",
-    "minecraft": ">1.15.2"
+    "fiber": ">=0.22.1-"
   }
 }

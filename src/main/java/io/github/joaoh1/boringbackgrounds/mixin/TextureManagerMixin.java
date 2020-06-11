@@ -18,14 +18,14 @@ import io.github.joaoh1.boringbackgrounds.BoringBackgroundsMod;
 @Mixin(TextureManager.class)
 public class TextureManagerMixin {
 	@Inject(
+		at = @At(value = "INVOKE", target = "net/minecraft/client/texture/AbstractTexture.bindTexture()V"),
 		method = "bindTextureInner(Lnet/minecraft/util/Identifier;)V",
-		at = @At(value = "INVOKE", target = "net/minecraft/client/texture/TextureManager.registerTexture(Lnet/minecraft/util/Identifier;Lnet/minecraft/client/texture/AbstractTexture;)V"),
 		locals = LocalCapture.CAPTURE_FAILHARD,
 		cancellable = true
 	)
 	private void customBackgroundBindTextureInner(Identifier id, CallbackInfo info, AbstractTexture abstractTexture) {
 		// If the identifier is the same as the background texture, hijack it and change it to the chosen texture
-		if (id.equals(DrawableHelper.BACKGROUND_LOCATION)) {
+		if (id.equals(DrawableHelper.BACKGROUND_TEXTURE)) {
 			abstractTexture = new ResourceTexture(BoringBackgroundsMod.backgroundTexture);
 			this.registerTexture(id, (AbstractTexture)abstractTexture);
 			((AbstractTexture)abstractTexture).bindTexture();
@@ -33,5 +33,6 @@ public class TextureManagerMixin {
 		}
 	}
 
-	@Shadow private void registerTexture(Identifier id, AbstractTexture abstractTexture) {}
+	@Shadow
+	private void registerTexture(Identifier id, AbstractTexture abstractTexture) {}
 }

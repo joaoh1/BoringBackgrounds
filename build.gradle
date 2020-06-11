@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '0.2.7-SNAPSHOT'
+	id 'fabric-loom' version '0.4-SNAPSHOT'
 	id 'maven-publish'
 }
 
@@ -7,11 +7,21 @@ sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
 archivesBaseName = project.archives_base_name
-version = project.mod_version
+
+if (System.env.CI == "true") {
+	def branch
+	branch = System.env.GITHUB_REF
+	branch = branch.substring(branch.lastIndexOf("/")+1)
+
+	version = "${project.mod_version}.${branch}+${System.env.GITHUB_RUN_NUMBER}"
+} else {
+	version = project.mod_version
+}
+
 group = project.maven_group
 
 repositories {
-	maven { url = 'http://server.bbkr.space:8081/artifactory/libs-release' }
+	mavenCentral()
 }
 
 dependencies {
@@ -19,8 +29,10 @@ dependencies {
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
 	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
-
-	modImplementation "io.github.cottonmc.cotton:cotton-config:1.0.0-rc.7"
+	
+	modImplementation "me.zeroeightsix:fiber:${project.fiber_version}"
+	
+	include "me.zeroeightsix:fiber:${project.fiber_version}"
 }
 
 processResources {
@@ -57,6 +69,19 @@ jar {
 
 // configure the maven publication
 publishing {
+	repositories {
+		maven {
+		    name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/joaoh1/BoringBackgrounds")
+            credentials {
+                username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
+                password = project.findProperty("gpr.key") ?: System.getenv("PASSWORD")
+            }
+		}
+		// uncomment to publish to the local maven
+		// mavenLocal()
+	}
+
 	publications {
 		mavenJava(MavenPublication) {
 			// add all the jars that should be included when publishing to maven
@@ -67,11 +92,5 @@ publishing {
 				builtBy remapSourcesJar
 			}
 		}
-	}
-
-	// select the repositories you want to publish to
-	repositories {
-		// uncomment to publish to the local maven
-		// mavenLocal()
 	}
 }
