@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
-import io.github.joaoh1.boringbackgrounds.BoringBackgroundsMod;
+import io.github.joaoh1.boringbackgrounds.utils.BackgroundUtils;
 
 @Mixin(TextureManager.class)
 public class TextureManagerMixin {
@@ -26,7 +26,7 @@ public class TextureManagerMixin {
 	private void customBackgroundBindTextureInner(Identifier id, CallbackInfo info, AbstractTexture abstractTexture) {
 		// If the identifier is the same as the background texture, hijack it and change it to the chosen texture
 		if (id.equals(DrawableHelper.BACKGROUND_TEXTURE)) {
-			abstractTexture = new ResourceTexture(BoringBackgroundsMod.backgroundTexture);
+			abstractTexture = new ResourceTexture(BackgroundUtils.backgroundTexture);
 			this.registerTexture(id, (AbstractTexture)abstractTexture);
 			((AbstractTexture)abstractTexture).bindTexture();
 			info.cancel();

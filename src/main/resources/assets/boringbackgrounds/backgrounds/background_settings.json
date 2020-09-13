@@ -1,0 +1,6 @@
+{
+    "textures": {
+        "minecraft:textures/gui/options_background.png": 1
+    },
+    "randomize_on_new_screen": false
+}
