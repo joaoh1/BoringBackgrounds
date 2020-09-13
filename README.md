@@ -14,7 +14,7 @@ This mod is available for download on the following services:
 ## Usage
 
 This mod reads input from both in `asset/boringbackgrounds/backgrounds/background_settings.json` inside resource packs or from `.minecraft/config/boringbackgrounds.json`, which overrides the resource pack input if found. Both files share the same format, comments were added in order to explain the format:
-```json
+```jsonc
 {
     //An array of identifiers and its weight, a bigger weight means more chances to be chosen compared to others.
     "textures": {
