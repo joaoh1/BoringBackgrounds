@@ -23,12 +23,12 @@ public class TextureManagerMixin {
 		locals = LocalCapture.CAPTURE_FAILHARD,
 		cancellable = true
 	)
-	private void customBackgroundBindTextureInner(Identifier id, CallbackInfo info, AbstractTexture abstractTexture) {
+	private void redirectBackgroundTexture(Identifier id, CallbackInfo info, AbstractTexture abstractTexture) {
 		// If the identifier is the same as the background texture, hijack it and change it to the chosen texture
-		if (id.equals(DrawableHelper.BACKGROUND_TEXTURE)) {
+		if (id == DrawableHelper.BACKGROUND_TEXTURE) {
 			abstractTexture = new ResourceTexture(BackgroundUtils.backgroundTexture);
-			this.registerTexture(id, (AbstractTexture)abstractTexture);
-			((AbstractTexture)abstractTexture).bindTexture();
+			this.registerTexture(id, abstractTexture);
+			abstractTexture.bindTexture();
 			info.cancel();
 		}
 	}

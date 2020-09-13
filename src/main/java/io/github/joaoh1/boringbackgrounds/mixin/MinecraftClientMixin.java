@@ -11,10 +11,11 @@ import net.minecraft.client.gui.screen.Screen;
 
 @Mixin(MinecraftClient.class)
 public class MinecraftClientMixin {
+    //The mixin behind the "randomize_on_new_screen"'s behavior
     @Inject(at = @At("HEAD"), method = "openScreen(Lnet/minecraft/client/gui/screen/Screen;)V")
     public void changeBackgroundAfterOpenScreen(Screen screen, CallbackInfo info) {
         if (BackgroundUtils.randomizeOnNewScreen) {
-            BackgroundUtils.backgroundTexture = BackgroundUtils.updateBackground();
+            BackgroundUtils.updateBackground();
         }
     }
 }

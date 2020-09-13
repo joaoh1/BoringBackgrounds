@@ -6,7 +6,6 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -18,10 +17,10 @@ import java.util.concurrent.Executor;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 
 import io.github.joaoh1.boringbackgrounds.utils.BackgroundUtils;
 import net.fabricmc.fabric.api.resource.SimpleResourceReloadListener;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
@@ -29,21 +28,20 @@ import net.minecraft.util.profiler.Profiler;
 
 public class BoringBackgroundsLoader implements SimpleResourceReloadListener<Map<Map<Identifier, Integer>, Boolean>> {
     private Identifier FABRIC_ID = new Identifier("boringbackgrounds", "data_loader");
-
+    
     @Override
     public CompletableFuture<Map<Map<Identifier, Integer>, Boolean>> load(ResourceManager manager, Profiler profiler, Executor executor) {
         return CompletableFuture.supplyAsync(() -> {
             Gson gson = new GsonBuilder().create();
-            Collection<Identifier> resources = manager.findResources("backgrounds", filename -> filename.equals("background_settings.json"));
+            Collection<Identifier> resources = manager.findResources("backgrounds", filename -> filename == "background_settings.json");
             Map<Identifier, Integer> map = new HashMap<>();
             boolean randomizeOnNewScreen = false;
             for (Identifier identifier : resources) {
                 try {
                     Reader reader;
-                    Path globalPath = FabricLoader.getInstance().getConfigDir().resolve("boringbackgrounds.json");
-                    if (globalPath.toFile().exists()) {
+                    if (BackgroundUtils.globalConfigPath.toFile().exists()) {
                         BackgroundUtils.logger.warn("[Boring Backgrounds] Found a global background settings file in minecraft/config/boringbackgrounds.json. Settings provided by resource packs will be ignored!");
-                        reader = Files.newBufferedReader(globalPath, StandardCharsets.UTF_8);
+                        reader = Files.newBufferedReader(BackgroundUtils.globalConfigPath, StandardCharsets.UTF_8);
                     } else {
                         reader = new BufferedReader(new InputStreamReader(manager.getResource(identifier).getInputStream(), StandardCharsets.UTF_8));
                     }
@@ -58,8 +56,8 @@ public class BoringBackgroundsLoader implements SimpleResourceReloadListener<Map
                     } else {
                         randomizeOnNewScreen = false;
                     }
-                } catch (IOException e) {
-                    BackgroundUtils.logger.error("[Boring Backgrounds] Failed to load the background settings!\n" + e);
+                } catch (IOException | JsonParseException e) {
+                    BackgroundUtils.logger.error("[Boring Backgrounds] Failed to load the background settings! The following error has been printed: " + e);
                 }
             }
             return Map.of(map, randomizeOnNewScreen);

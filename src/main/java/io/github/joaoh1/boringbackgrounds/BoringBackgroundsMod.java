@@ -7,6 +7,7 @@ import net.minecraft.resource.ResourceType;
 public class BoringBackgroundsMod implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
+		//Registers the background loader
 		ResourceManagerHelper.get(ResourceType.CLIENT_RESOURCES).registerReloadListener(new BoringBackgroundsLoader());
 	}
 }

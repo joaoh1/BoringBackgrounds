@@ -3,7 +3,7 @@
   "id": "boringbackgrounds",
   "version": "${version}",
   "name": "Boring Backgrounds",
-  "description": "Do you not like the dirt background? Then this mod is for you! The background can be changed by a resource pack in assets/boringbackgrounds/backgrounds/background_settings.json or be changed globally at .minecraft/config/boringbackgrounds.json",
+  "description": "Do you not like the dirt background or just want more backgrounds? Then this mod is for you! The background can be changed by a resource pack in assets/boringbackgrounds/backgrounds/background_settings.json or be changed globally at .minecraft/config/boringbackgrounds.json",
   "authors": [
     "joaoh1"
   ],
@@ -24,7 +24,7 @@
     "boringbackgrounds.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.7.8",
-    "fiber": ">=0.22.1-"
+    "fabricloader": ">=0.9.0",
+    "fabric": "*"
   }
 }
