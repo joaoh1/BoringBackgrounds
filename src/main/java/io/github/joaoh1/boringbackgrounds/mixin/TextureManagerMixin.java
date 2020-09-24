@@ -25,7 +25,7 @@ public class TextureManagerMixin {
 	)
 	private void redirectBackgroundTexture(Identifier id, CallbackInfo info, AbstractTexture abstractTexture) {
 		// If the identifier is the same as the background texture, hijack it and change it to the chosen texture
-		if (id == DrawableHelper.BACKGROUND_TEXTURE) {
+		if (id == DrawableHelper.OPTIONS_BACKGROUND_TEXTURE) {
 			abstractTexture = new ResourceTexture(BackgroundUtils.backgroundTexture);
 			this.registerTexture(id, abstractTexture);
 			abstractTexture.bindTexture();

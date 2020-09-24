@@ -33,7 +33,7 @@ public class BoringBackgroundsLoader implements SimpleResourceReloadListener<Map
     public CompletableFuture<Map<Map<Identifier, Integer>, Boolean>> load(ResourceManager manager, Profiler profiler, Executor executor) {
         return CompletableFuture.supplyAsync(() -> {
             Gson gson = new GsonBuilder().create();
-            Collection<Identifier> resources = manager.findResources("backgrounds", filename -> filename == "background_settings.json");
+            Collection<Identifier> resources = manager.findResources("backgrounds", filename -> filename.contentEquals("background_settings.json"));
             Map<Identifier, Integer> map = new HashMap<>();
             boolean randomizeOnNewScreen = false;
             for (Identifier identifier : resources) {
@@ -60,7 +60,9 @@ public class BoringBackgroundsLoader implements SimpleResourceReloadListener<Map
                     BackgroundUtils.logger.error("[Boring Backgrounds] Failed to load the background settings! The following error has been printed: " + e);
                 }
             }
-            return Map.of(map, randomizeOnNewScreen);
+            Map<Map<Identifier, Integer>, Boolean> returnedMap = new HashMap<>();
+            returnedMap.put(map, randomizeOnNewScreen);
+            return returnedMap;
         }, executor);
     }
 
